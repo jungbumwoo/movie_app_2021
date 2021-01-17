@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+function Profile({ name, email}) {
+  return (
+    <div>
+      <h5>name: {name}</h5>
+      <h6>email: {email}</h6>
+    </div>
+  )
+}
+
+const userProfile = [
+  {
+    name: "Rigyeong",
+    email: "cute@cute.co"
+  },
+  {
+    name: "Park Kim",
+    email: "yeah@kane.kr"
+  },
+  {
+    name: "kim Ba Bo",
+    email: "noRajo@fjdo.324"
+  }
+]
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {userProfile.map(pf => (
+          <Profile name={pf.name} email={pf.email} />
+      ))}
     </div>
   );
 }
