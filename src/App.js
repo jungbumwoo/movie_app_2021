@@ -2,43 +2,33 @@ import React from "react";
 import axios from "axios";
 import Movies from "./Movies";
 
-
-
 class App extends React.Component {
   state = {
     isLoading: true,
     movies: [],
   };
-
-  // https://yts.mx/api/v2/list_movies.json?limit=30&sort_by=rating
-  componentDidMount() {
-    async function getMovies() {
-      try {
-        let axiosMovies = await axios.get('https://yts.mx/api/v2/list_movies.json?limit=30&sort_by=rating')
-        let listMovies = axiosMovies.data.data.movies;
-        console.log(listMovies);
-        this.setState({ movies: listMovies});
-
-      } catch(err) {
-        console.log(err);
-      }
+  getMovies = async() => {
+    try {
+      const { data: { data: { movies }}} = await axios.get('https://yts-proxy.nomadcoders1.now.sh/list_movies.json');
+      this.setState({ movies, isLoading: false});
+    } catch(err) {
+      console.log(err);
     }
-    getMovies();
-    setTimeout(()=> {
-      this.setState({ isLoading: false});
-    }, 6000);
+  }
+  componentDidMount() {
+    this.getMovies();
   };
   
   render(){
-    const { isLoading } = this.state;
-    let { movies } = this.state;
+    let { isLoading, movies} = this.state;
     return (
       <div>
         {isLoading ? "Loading.." 
           : movies.map(mo => (
             <Movies 
               key= {mo.id}
-              url= {mo.url}
+              id= {mo.id}
+              imgurl= {mo.medium_cover_image}
               title= {mo.title}
               summary= {mo.summary}
               year= {mo.year}

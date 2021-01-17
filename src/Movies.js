@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Movies({id, url, title, summary, year}) {
+function Movies({id, imgurl, title, summary, year}) {
     return(
         <div>
-            <img src={url} alt={title}/>
+            <img src={imgurl} alt={title}/>
             <h5>{title}</h5>
-            <span>{year}</span>
+            <span>({year})</span>
             <span>{summary}</span>
         </div>
     )
@@ -14,7 +14,7 @@ function Movies({id, url, title, summary, year}) {
 
 Movies.propTypes = {
     id: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired,
+    imgurl: PropTypes.string,
     title: PropTypes.string.isRequired,
     summary: PropTypes.string.isRequired,
     year: PropTypes.number.isRequired
