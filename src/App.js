@@ -14,9 +14,11 @@ class App extends React.Component {
   componentDidMount() {
     async function getMovies() {
       try {
-        let {data: {axiosMovies}} = await axios.get('https://yts.mx/api/v2/list_movies.json?limit=30&sort_by=rating');
-        console.log(axiosMovies);
-        this.setState({movies: axiosMovies})
+        let axiosMovies = await axios.get('https://yts.mx/api/v2/list_movies.json?limit=30&sort_by=rating')
+        let listMovies = axiosMovies.data.data.movies;
+        console.log(listMovies);
+        this.setState({ movies: listMovies});
+
       } catch(err) {
         console.log(err);
       }
