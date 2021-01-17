@@ -1,37 +1,50 @@
 import React from "react";
+import axios from "axios";
+import Movies from "./Movies";
 
-function Profile({ name, email}) {
-  return (
-    <div>
-      <h5>name: {name}</h5>
-      <h6>email: {email}</h6>
-    </div>
-  )
-}
 
-const userProfile = [
-  {
-    name: "Rigyeong",
-    email: "cute@cute.co"
-  },
-  {
-    name: "Park Kim",
-    email: "yeah@kane.kr"
-  },
-  {
-    name: "kim Ba Bo",
-    email: "noRajo@fjdo.324"
+
+class App extends React.Component {
+  state = {
+    isLoading: true,
+    movies: [],
+  };
+
+  // https://yts.mx/api/v2/list_movies.json?limit=30&sort_by=rating
+  componentDidMount() {
+    async function getMovies() {
+      try {
+        let {data: {axiosMovies}} = await axios.get('https://yts.mx/api/v2/list_movies.json?limit=30&sort_by=rating');
+        console.log(axiosMovies);
+        this.setState({movies: axiosMovies})
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    getMovies();
+    setTimeout(()=> {
+      this.setState({ isLoading: false});
+    }, 6000);
+  };
+  
+  render(){
+    const { isLoading } = this.state;
+    let { movies } = this.state;
+    return (
+      <div>
+        {isLoading ? "Loading.." 
+          : movies.map(mo => (
+            <Movies 
+              key= {mo.id}
+              url= {mo.url}
+              title= {mo.title}
+              summary= {mo.summary}
+              year= {mo.year}
+            />
+          )) };
+      </div>
+    )
   }
-]
-
-function App() {
-  return (
-    <div>
-      {userProfile.map(pf => (
-          <Profile name={pf.name} email={pf.email} />
-      ))}
-    </div>
-  );
-}
+};
 
 export default App;
