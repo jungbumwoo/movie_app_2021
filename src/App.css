@@ -25,3 +25,14 @@ body,
     align-items: center;
     font-weight: 400;
 }
+
+.movies {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 3rem;
+    padding-top: 4.2rem;
+    width: 80%;
+    
+}
